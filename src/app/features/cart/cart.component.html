@@ -1,0 +1,105 @@
+<section class="bg-gray-50 py-12">
+  <div class="container mx-auto px-5 grid lg:grid-cols-12 gap-8">
+
+    <!-- Cart Items -->
+    <div class="lg:col-span-8 col-span-12 space-y-6">
+
+      <!-- Cart Header -->
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">Shopping Cart</h1>
+        <span class="text-green-600 font-semibold relative">
+          {{cartDetails.products.length}} item
+          <span class="absolute -top-2 -right-3 bg-green-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center animate-pulse">
+            {{cartDetails.products.length}}
+          </span>
+        </span>
+      </div>
+
+      @for (item of cartDetails.products; track item.product._id) {
+        <!-- Product Card -->
+        <div class="grid grid-cols-12 gap-4 p-5 bg-white rounded-2xl shadow-md 
+                    hover:shadow-2xl hover:scale-105 transition-transform duration-300 transform relative group animate-slideIn">
+
+          <!-- Glow Hover Effect -->
+          <div class="absolute inset-0 rounded-2xl pointer-events-none 
+                      bg-green-50 opacity-0  transition-opacity duration-300"></div>
+
+          <!-- Product Image -->
+          <div class="col-span-3 sm:col-span-2 relative">
+            <img [src]=item.product.imageCover [alt]=item.product.title 
+                 class="w-full h-28 object-cover rounded-xl shadow-sm"/>
+          </div>
+
+          <!-- Product Info -->
+          <div class="col-span-6 sm:col-span-7 flex flex-col justify-between">
+            <h3 class="text-lg sm:text-xl font-semibold text-gray-800">{{item.product.title}}</h3>
+
+            <div class="flex items-center mt-3 space-x-4">
+              <!-- Quantity Selector -->
+              <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden shadow-sm relative">
+                <button (click)="updateCart(item.product._id,item.count-1)"
+                        class="px-3 py-1 text-gray-600 hover:bg-green-100 transition transform hover:scale-110">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <span class="px-4 py-1 font-medium text-black animate-bounce">{{item.count}}</span>
+                <button (click)="updateCart(item.product._id,item.count+1)"
+                        class="px-3 py-1 text-gray-600 hover:bg-green-100 transition transform hover:scale-110">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+
+              <!-- Remove Button -->
+              <button (click)="removeProductInCart(item.product._id)" 
+                      class="text-red-500 hover:text-red-600 transition transform hover:scale-125"
+                      >
+                <i class="fa fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Price -->
+          <div class="col-span-3 sm:col-span-3 flex flex-col justify-between items-end text-lg sm:text-xl font-semibold text-gray-900">
+            <span class="animate-count">{{item.price * item.count}} EGP</span>
+          </div>
+        </div>
+      }
+
+     
+    </div>
+
+    <!-- Order Summary -->
+    <div class="lg:col-span-4 col-span-12 bg-white p-6 rounded-2xl shadow-2xl self-start">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Order Summary</h2>
+
+      <!-- Price Breakdown -->
+      <div class="space-y-3 text-gray-700">
+        <div class="flex justify-between">
+          <span>Subtotal</span>
+          <span class="animate-count">{{cartDetails.totalCartPrice}} EGP</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Shipping</span>
+          <span>50 EGP</span>
+        </div>
+        <div class="border-t border-gray-300 pt-3 flex justify-between font-bold text-gray-900">
+          <span>Total</span>
+          <span class="animate-count">{{cartDetails.totalCartPrice + 50}} EGP</span>
+        </div>
+      </div>
+
+      <!-- Checkout Button -->
+      <button [routerLink]="['/checkout',cartDetails._id]"
+              class="w-full py-3 mt-6 text-white font-semibold rounded-xl 
+                     bg-gradient-to-r from-green-500 to-green-600 
+                     hover:from-green-600 hover:to-green-700 
+                     shadow-2xl transform hover:scale-105 hover:shadow-3xl transition-all duration-300 relative overflow-hidden">
+        <span class="absolute inset-0 bg-white opacity-10 rounded-xl pointer-events-none animate-pulse"></span>
+        Proceed to Checkout
+      </button>
+
+      <p class="text-gray-500 text-sm mt-3 text-center">
+        Secure checkout with fast delivery 🚀
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,53 @@
+<section
+  class="bg-white shadow-2xl p-10 rounded-3xl mx-auto my-20 transition-all duration-300
+         w-11/12 max-w-md md:max-w-lg lg:max-w-xl"
+>
+  <h1 class="text-4xl font-bold text-center text-green-800 pb-8 tracking-tight">
+    Login Now
+  </h1>
+
+  <form [formGroup]="logInForm" (ngSubmit)="submitForm()" class="space-y-6">
+    <!-- Email -->
+    <app-input
+      [control]="logInForm.get('email')"
+      [labelInput]="'Email'"
+      [idInput]="'email'"
+      [typeInput]="'email'"
+    ></app-input>
+
+    <!-- Password -->
+    <app-input
+      [control]="logInForm.get('password')"
+      [labelInput]="'Password'"
+      [idInput]="'password'"
+    >
+      Password must be at least 8 characters and include both letters and numbers.
+    </app-input>
+
+    <!-- Submit Button -->
+    <button
+    type="submit"
+    [disabled]="logInForm.invalid"
+    class="w-full py-3 mt-4 rounded-xl bg-green-700 text-white font-semibold text-lg tracking-wide shadow-md hover:bg-green-800 hover:shadow-lg focus:ring-4 focus:ring-green-300 transition-all duration-300"
+  >
+    login @if (isLoading) {
+    <span> <i class="fa-solid fa-spinner animate-spin"></i></span>}
+  </button>
+    <!-- Forgot Password -->
+    <a routerLink="/forgetPassword" (click)="dialogRef?.close()"
+       class="block text-center text-green-700 hover:text-green-900 font-semibold  transition-all">
+      Forgot Password?
+    </a>
+    <p class="text-center mt-4">
+      Already have an account?
+      <a routerLink="/register" (click)="dialogRef?.close()" class="text-green-700 hover:text-green-900 transition-all font-semibold">
+        sign up
+      </a>
+    </p>
+
+    <!-- Error Message -->
+    <p *ngIf="msgError" class="text-center text-red-500 bg-red-200 p-2 rounded">
+      {{ msgError }}
+    </p>
+  </form>
+</section>

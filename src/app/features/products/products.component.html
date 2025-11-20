@@ -1,0 +1,42 @@
+<section class="bg-gray-50 py-16">
+  <div class="container mx-auto px-6 lg:px-10 flex flex-col items-center">
+
+    <!-- Section Title -->
+    <h2 class="text-4xl font-semibold text-green-800 text-center mb-8 relative inline-block">
+      Popular Products
+      <span class="block h-1 w-24 bg-green-400 mx-auto mt-2 rounded-full animate-pulse"></span>
+    </h2>
+
+    <!-- Search Bar -->
+    <div class="w-full sm:w-1/2 mb-10">
+      <input
+        [(ngModel)]="text"
+        type="search"
+        placeholder="Search products..."
+        class="border-2 border-green-600 w-full rounded-lg p-3 text-gray-700 font-medium placeholder-gray-400 shadow-md
+               transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+      />
+      <button *ngIf="text" (click)="text=''" class="absolute right-3 top-3 text-gray-400 hover:text-gray-600">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full place-items-center">
+      @for (product of productList()|search:text| paginate: { id: 'foo', itemsPerPage: pageSize,
+      currentPage: p, totalItems: total } ; track product.id) {
+        <app-card [product]="product" class="w-full max-w-sm"></app-card>
+      }
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-center mt-12 w-full">
+      <pagination-controls
+        class="my-pagination"
+        id="foo"
+        (pageChange)="getAllProductData($event)"
+      ></pagination-controls>
+    </div>
+
+  </div>
+</section>

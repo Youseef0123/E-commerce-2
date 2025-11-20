@@ -1,0 +1,1 @@
+import{Rb as a,Za as n,ub as e,vb as p}from"./chunk-4DX7SM4S.js";import"./chunk-4CLCTAJ7.js";var f=class t{static \u0275fac=function(o){return new(o||t)};static \u0275cmp=n({type:t,selectors:[["app-notfound"]],decls:2,vars:0,template:function(o,s){o&1&&(e(0,"p"),a(1,"notfound works!"),p())},encapsulation:2})};export{f as NotfoundComponent};

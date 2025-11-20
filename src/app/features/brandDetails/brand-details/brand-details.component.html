@@ -1,0 +1,61 @@
+<section class="bg-gray-50 py-16 px-5 min-h-screen">
+  <div class="container mx-auto lg:px-10 flex flex-col items-center">
+
+    <!-- Brand Header -->
+    <div class="text-center mb-12">
+      @if (!brandDetails) {
+        <p class="text-gray-500 text-lg animate-pulse">Loading brand details...</p>
+      } @else {
+        <div class="relative inline-block">
+          <img
+            [src]="brandDetails.image"
+            [alt]="brandDetails.name"
+            class="w-44 h-44 object-contain mx-auto rounded-full shadow-lg border-4 border-green-200 transition-transform duration-500 hover:scale-105"
+          />
+          <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-green-500 text-white text-sm px-3 py-1 rounded-full animate-pulse">
+            {{ brandProducts?.length || 0 }} Products
+          </span>
+        </div>
+        <h1 class="text-5xl font-extrabold text-green-700 mt-6 relative inline-block text-center">
+          {{ brandDetails.name }}
+          <span class="block h-1 w-24 bg-green-400 mx-auto mt-2 rounded-full animate-pulse"></span>
+        </h1>
+      }
+    </div>
+
+    <!-- Brand Products Title -->
+    <h2 class="text-3xl font-semibold text-green-800 text-center mb-10">
+      Products by {{ brandDetails?.name }}
+    </h2>
+
+    <!-- Products Grid -->
+     <div>
+  @if (!brandProducts?.length) {
+      <p class="text-center text-gray-500 text-lg">No products available for this brand.</p>
+    } @else {
+    
+      
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full place-items-center">
+      @for (product of brandProducts|search:text| paginate: { id: 'foo', itemsPerPage: pageSize,
+      currentPage: p, totalItems: total } ; track product.id) {
+        <app-card [product]="product" class="w-full max-w-sm"></app-card>
+      }
+    </div>
+      
+  }
+     </div>
+  
+    
+
+    <!-- Back Button -->
+    <div class="flex justify-center mt-14">
+      <button
+        routerLink="/brands"
+        class="bg-green-600 hover:bg-green-700 text-white py-3 px-10 rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl font-semibold text-lg"
+      >
+        Back to Brands
+      </button>
+    </div>
+
+  </div>
+</section>

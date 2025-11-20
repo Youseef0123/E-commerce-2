@@ -1,0 +1,50 @@
+<section class="bg-gray-50 py-16">
+  <div class="container mx-auto px-6 lg:px-10">
+
+    <!-- Category Header -->
+    <div class="text-center mb-12">
+      <div class="relative inline-block">
+        <img 
+          [src]="categoryDetails.image" 
+          [alt]="categoryDetails.name"
+          class="w-44 h-44 object-contain mx-auto rounded-full shadow-lg border-4 border-green-200 transition-transform duration-500 hover:scale-105"
+        />
+        <span class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-green-500 text-white text-sm px-3 py-1 rounded-full animate-pulse">
+          {{ categoryProducts?.length || 0 }} Products
+        </span>
+      </div>
+      <h1 class="text-5xl font-extrabold text-green-700 mt-6 relative inline-block">
+        {{ categoryDetails.name }}
+        <span class="block h-1 w-24 bg-green-400 mx-auto mt-2 rounded-full animate-pulse"></span>
+      </h1>
+    </div>
+
+    <!-- Products Grid -->
+    <div >
+      @if (!categoryProducts?.length) {
+        <p class="col-span-full text-center text-gray-500 text-lg">
+          No products found in this category.
+        </p>
+      } @else {<!-- Products Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full place-items-center">
+          @for (product of categoryProducts|search:text| paginate: { id: 'foo', itemsPerPage: pageSize,
+          currentPage: p, totalItems: total } ; track product.id) {
+            <app-card [product]="product" class="w-full max-w-sm"></app-card>
+          }
+        </div>
+        }
+      
+    </div>
+
+    <!-- Back Button -->
+    <div class="flex justify-center mt-14">
+      <button
+        routerLink="/categories"
+        class="bg-green-600 hover:bg-green-700 text-white py-3 px-10 rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl font-semibold text-lg"
+      >
+        Back to Categories
+      </button>
+    </div>
+
+  </div>
+</section>

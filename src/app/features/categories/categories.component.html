@@ -1,0 +1,41 @@
+<section class="bg-gray-50 py-10 px-5 min-h-screen">
+  <!-- Page Title -->
+  <div class="flex justify-center mb-12">
+    <h1 class="text-4xl font-extrabold text-green-700 text-center relative inline-block">
+      Categories
+      <span class="block h-1 w-24 bg-green-400 mx-auto mt-2 rounded-full animate-pulse"></span>
+    </h1>
+  </div>
+
+  <!-- Categories Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full">
+    @for (cat of categories; track cat._id) {
+      <div
+        class="bg-white rounded-2xl shadow-lg overflow-hidden relative transition-transform duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer group"
+        [routerLink]="['/categories', cat._id]"
+      >
+        <!-- Category Image -->
+        <div class="relative w-full h-52 overflow-hidden">
+          <img
+            [src]="cat.image"
+            [alt]="cat.name"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+          <!-- Optional Badge -->
+          @if(cat.isPopular) {
+            <span class="absolute top-3 left-3 bg-green-500 text-white text-xs px-2 py-1 rounded-full font-semibold animate-pulse">
+              Popular
+            </span>
+          }
+        </div>
+
+        <!-- Category Info -->
+        <div class="p-4 text-center">
+          <h2 class="text-xl font-semibold text-gray-800 group-hover:text-green-600 transition">
+            {{ cat.name }}
+          </h2>
+        </div>
+      </div>
+    }
+  </div>
+</section>

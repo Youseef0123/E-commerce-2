@@ -1,0 +1,61 @@
+<section class="min-h-screen flex items-center justify-center bg-gray-50 py-10">
+  <div class="container mx-auto px-6 lg:px-10 bg-white shadow-xl rounded-3xl p-10 max-w-6xl">
+    
+    <!-- Page Title -->
+    <h1 class="text-center mb-8 text-4xl text-green-800 font-extrabold relative">
+      Product Details
+      <span class="block h-1 w-24 bg-green-400 mx-auto mt-2 rounded-full animate-pulse"></span>
+    </h1>
+
+    <!-- Product Info Grid -->
+    <div class="grid grid-cols-12 items-center gap-6">
+      
+      <!-- Product Main Image -->
+      <div class="col-span-12 md:col-span-4 flex justify-center">
+        <div class="overflow-hidden rounded-2xl shadow-lg hover:scale-105 transition-transform duration-500">
+          <img
+            [src]="productDetails.imageCover"
+            [alt]="productDetails.title"
+            class="w-full h-[300px] object-contain"
+          />
+        </div>
+      </div>
+
+      <!-- Product Details -->
+      <div class="col-span-12 md:col-span-8 flex flex-col justify-between">
+        <h2 class="text-2xl font-semibold mb-3 hover:text-green-600 transition">{{ productDetails.title }}</h2>
+        <p class="text-gray-700 text-sm mb-4">{{ productDetails.description }}</p>
+        <span class="block text-gray-500 mb-4">
+          Category: <span class="font-medium text-gray-700">{{ productDetails.category.name }}</span>
+        </span>
+
+        <div class="flex justify-between items-center mb-6">
+          <span class="text-lg font-bold text-green-700">{{ productDetails.price }} EGP</span>
+          <span class="flex items-center gap-1 text-yellow-500 font-medium">
+            <i class="fa-solid fa-star"></i> {{ productDetails.ratingsAverage }}
+          </span>
+        </div>
+
+        <button
+          (click)="addProductToCart(productDetails._id)"
+          class="bg-green-600 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-green-700 hover:scale-105 transition transform font-semibold"
+        >
+          Add To Cart
+        </button>
+      </div>
+    </div>
+
+    <!-- Additional Product Images -->
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pt-12 mx-auto place-items-center max-w-5xl">
+      @for(image of productDetails?.images; track image) {
+        <div class="border rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-shadow duration-300">
+          <img
+            [src]="image"
+            alt="Product Image"
+            class="w-full h-[200px] object-contain hover:scale-105 transition-transform duration-500"
+          />
+        </div>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,100 @@
+<div class="relative my-4">
+  <div class="relative">
+
+
+    @if(element==="input"){
+
+<input 
+      [formControl]="control"
+      [type]="typeInput || (flag ? 'password' : 'text')"
+      [id]="idInput"
+      [ngClass]="{
+        'border-red-700': control?.invalid && control?.touched,
+        'border-green-600': control?.valid && control?.touched
+      }"
+      class="peer  block w-full rounded-xl border border-gray-300 bg-transparent px-4 pt-8 pb-2 text-base text-gray-900 focus:border-green-600 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all duration-300"
+      placeholder=""
+    />
+
+
+    }@else if(element==="text"){
+
+ <textarea
+    [formControl]="control"
+ 
+    [id]="idInput"
+    [ngClass]="{
+      'border-red-700': control?.invalid && control?.touched,
+      'border-green-600': control?.valid && control?.touched
+    }"
+    class="peer block w-full rounded-xl border border-gray-300 bg-transparent px-4 pt-8 pb-2 text-base text-gray-900 focus:border-green-600 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all duration-300"
+    placeholder=""
+  >  </textarea>
+
+
+ 
+    
+
+    }
+    
+    
+    @if (idInput==="password" || idInput==="rePassword") {
+    <span (click)="flag = !flag" class="absolute top-1/2 end-4 -translate-y-1/2 cursor-pointer">
+      <i class="fa-solid" [ngClass]="flag ? 'fa-eye-slash' : 'fa-eye'"></i>
+    </span>
+    }
+
+    <label 
+      [for]="idInput"
+      [ngClass]="{
+        'text-red-700': control?.invalid && control?.touched,
+        'text-green-700': control?.valid && control?.touched
+      }"
+      class="absolute left-4 top-3 mb-3 text-gray-500 text-sm transition-all duration-300 peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-3 peer-focus:text-sm peer-focus:text-green-700"
+    >
+      {{ labelInput }}
+    </label>
+  </div>
+
+  @if (control?.errors && control?.touched) {
+  <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 mt-2" role="alert">
+    <ul>
+      @if (control?.getError('required')) {
+      <li>Input is required</li>
+      } @if (control?.getError('email')) {
+      <li>Enter a valid email address</li>
+      } @if (control?.getError('minlength')) {
+      <li>At least 3 characters required</li>
+      } @if (control?.getError('maxlength')) {
+      <li>Must be less than or equal to 20 characters</li>
+      } @if (control?.getError('pattern')) {
+      <li>
+        <ng-container><ng-content></ng-content></ng-container>
+      </li>
+      }
+      
+      <!-- لما بنستخدم @if أو *ngIf في Angular، 
+فـ اللي جواه بيتحوّل تلقائيًا إلى <ng-template> (يعني قالب مؤقت داخل الكومبوننت).
+المشكلة إن <ng-content> ما بيشتغلش جوه template داخلي،
+لأنه بيسقط (project) المحتوى اللي مكتوب بين وسمي الكومبوننت <app-input> ... </app-input> 
+فقط داخل الـ template الرئيسي. -->
+
+      @if (control?.getError('mismatch')) {
+      <li>Password confirmation is incorrect</li>
+      }
+    </ul>
+  </div>
+  }
+</div>
+
+<!-- <button
+    type="submit"
+    [disabled]="registerForm.invalid"
+    class="w-full py-3 mt-4 rounded-xl bg-green-700 text-white font-semibold text-lg tracking-wide shadow-md hover:bg-green-800 hover:shadow-lg focus:ring-4 focus:ring-green-300 transition-all duration-300"
+  >
+    Register @if (isLoading) {
+    <span> <i class="fa-solid fa-spinner animate-spin"></i></span>}
+  </button>
+  @if (msgError) {
+  <p class="text-center text-xl text-red-500 bg-red-200 p-2">{{ msgError }}</p>
+  } -->
